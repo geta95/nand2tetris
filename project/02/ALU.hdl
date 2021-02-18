@@ -63,6 +63,13 @@ CHIP ALU {
         Mux16 (a=andxy, b=addxy, sel=f, out=w4);
         
         // if (no == 1) set out = !out
+        // if (out < 0) set ng ==1 else ng == 0
         Not16 (in=w4, out=notw4);
-        Mux16 (a=w4, b=notw4, sel=no, out=out);
+        Mux16 (a=w4, b=notw4, sel=no, out=out, out[15]==ng, out[0..7]=out0to7, out[8..15]=out8to15);
+        
+        // if (out == 0) set zr == 1 else zr == 0
+        Or8Way (in=out0to7, out=w5);
+        Or8Way (in=out8to15, out=w6);
+        Or (a=w5, b=w6, out=w7);
+        Not (in=w7, out=zr);
 }
