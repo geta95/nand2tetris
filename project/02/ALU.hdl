@@ -60,7 +60,7 @@ CHIP ALU {
         // if (f == 1) set out = x + y else out = x & y
         Add16 (a=w2, b=w3, out=addxy);
         And16 (a=w2, b=w3, out=andxy);
-        Mux16 (a=addxy, b=andxy, sel=f, out=w4);
+        Mux16 (a=andxy, b=addxy, sel=f, out=w4);
         
         // if (no == 1) set out = !out
         Not16 (in=w4, out=notw4);
