@@ -16,14 +16,14 @@ CHIP RAM16K {
 
     PARTS:
     // Put your code here:
-        DMux8Way (in=load, sel=address[12..13], a=w00, b=w01, c=w02, d=w03, e=w04, f=w05, g=w06, h=w07);
-        RAM4K (in=in, load=w00, address=address[0..11], out=w10);
-        RAM4K (in=in, load=w01, address=address[0..11], out=w11);
-        RAM4K (in=in, load=w02, address=address[0..11], out=w12);
-        RAM4K (in=in, load=w03, address=address[0..11], out=w13);
-        RAM4K (in=in, load=w04, address=address[0..11], out=w14);
-        RAM4K (in=in, load=w05, address=address[0..11], out=w15);
-        RAM4K (in=in, load=w06, address=address[0..11], out=w16);
-        RAM4K (in=in, load=w07, address=address[0..11], out=w17);
-        Mux8Way16 (a=w10, b=w11, c=w12, d=w13, e=w14, f=w15, g=w16, h=w17, sel=address[12..13], out=out);
+        DMux8Way (in=load, sel=address[11..13], a=w00, b=w01, c=w02, d=w03, e=w04, f=w05, g=w06, h=w07);
+        RAM4K (in=in, load=w00, address=address[0..10], out=w10);
+        RAM4K (in=in, load=w01, address=address[0..10], out=w11);
+        RAM4K (in=in, load=w02, address=address[0..10], out=w12);
+        RAM4K (in=in, load=w03, address=address[0..10], out=w13);
+        RAM4K (in=in, load=w04, address=address[0..10], out=w14);
+        RAM4K (in=in, load=w05, address=address[0..10], out=w15);
+        RAM4K (in=in, load=w06, address=address[0..10], out=w16);
+        RAM4K (in=in, load=w07, address=address[0..10], out=w17);
+        Mux8Way16 (a=w10, b=w11, c=w12, d=w13, e=w14, f=w15, g=w16, h=w17, sel=address[11..13], out=out);
 }
