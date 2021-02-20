@@ -14,22 +14,23 @@
 // Put your code here.
 (BLACK)   // if press any button on keyboard
   @i
-  M=1     // i = 1
+  M=1
   
   @i
-  D=M     // D = i
+  D=M
   
   @8196
-  D=D-A   // D = i - 8196
+  D=D-A
   
-  @END
-  D;JGT   // if D = i - 8196 jmp BLACK
+  @END    // if D = i - 8196 > 0 jmp END
+  D;JGT
   
   @SCREEN
   M=-1
   
   @i
-  D=M+1
+  M=M+1
+  D=M
   
   @SCREEN
   A=A+D
