@@ -12,17 +12,50 @@
 // the screen should remain fully clear as long as no key is pressed.
 
 // Put your code here.
+(LOOP)
   @i
   M=1
-
-(BLACK)   // if press any button on keyboard
+  
+  @KBD
+  D=M
+  
+  @BLACK
+  D;JGT
+  
+(WHITE)
   @i
   D=M
   
   @8196
   D=D-A
   
-  @END    // if D = i - 8196 > 0 jmp END
+  @LOOP     // if D = i - 8196 > 0 jmp LOOP
+  D;JGT
+  
+  @SCREEN
+  M=0
+  
+  @i
+  D=M
+  
+  @SCREEN
+  A=A+D
+  M=0
+  
+  @i
+  M=M+1
+  
+  @WHITE
+  0;JMP
+
+(BLACK)
+  @i
+  D=M
+  
+  @8196
+  D=D-A
+  
+  @LOOP    // if D = i - 8196 > 0 jmp LOOP
   D;JGT
   
   @SCREEN
