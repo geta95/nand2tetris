@@ -29,12 +29,14 @@
   M=-1
   
   @i
-  M=M+1
   D=M
   
   @SCREEN
   A=A+D
   M=-1
+  
+  @i
+  M=M+1
   
   @BLACK
   0;JMP
