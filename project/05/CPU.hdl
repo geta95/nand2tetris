@@ -40,21 +40,30 @@ CHIP CPU {
 
     PARTS:
     // Put your code here:
+        // writeM
         And (a=instruction[15], b=instruction[3], out=writeM);
+        
+        // Mux0
+        And (a=instruction[15], b=instruction[5], out=loadMux0);
+        Mux16 (a=instruction, b=outALU, sel=loadMux0, out=outMux0);
+        
+        // A Register
         Not (in=instruction[15], out=notins15);
-        Or (a=instruction[5], b=notins15, out=loada);
-        Or (a=notins15, b=instruction[12], out=selmux1);
-        And (a=instruction[4], b=instruction[15], out=loadd);
+        Or (a=instruction[5], b=notins15, out=loadA);
+        ARegister (in=outMux0, load=loadA, out=outA, out[0..14]=addressM);
         
-        Mux16 (a=instruction, b=outalu, sel=instruction[15], out=outmux0);
-        ARegister (in=outmux0, load=loada, out=outa, out[0..14]=addressM);
-        Mux16 (a=outa, b=inM, sel=selmux1, out=outmux1);
+        // Mux1
+        Or (a=notins15, b=instruction[12], out=selMux1);
+        Mux16 (a=outa, b=inM, sel=selMux1, out=outMux1);
         
-        DRegister (in=outalu, load=loadd, out=outd);
+        // D Register
+        And (a=instruction[4], b=instruction[15], out=loadD);
+        DRegister (in=outALU, load=loadD, out=outD);
         
+        // ALU
         ALU (
-             x=outd,
-             y=outmux1,
+             x=outD,
+             y=outMux1,
              zx=instruction[11],
              nx=instruction[10],
              zy=instruction[9],
@@ -62,10 +71,13 @@ CHIP CPU {
              f=instruction[7],
              no=instruction[6],
              out=outM,
-             out=outalu,
+             out=outALU,
              zr=zr,
              ng=ng
              );
+             
+        // PC
+        PC (in=outA, inc=true, load=loadPC, reset=reset, out[0..14]=pc);
              
         // Judging JMP
         And (a=instruction[2], b=ng, out=w0);
@@ -74,7 +86,5 @@ CHIP CPU {
         Or (a=w0, b=w1, out=w2);
         And (a=instruction[1], b=zr, out=w3);
         Or (a=w2, b=w3, out=w4);
-        And (a=instruction[15], b=w4, out=loadpc);
-        
-        PC (in=outa, inc=true, load=loadpc, reset=reset, out[0..14]=pc);
+        And (a=instruction[15], b=w4, out=loadPC);
 }
