@@ -84,7 +84,7 @@ CHIP CPU {
         Not (in=zr, out=notzr);
         And (a=instruction[0], b=notng, out=w1);
         Or (a=w0, b=w1, out=w2);
-        And (a=w2, b=notzr, out=w3)
+        And (a=w2, b=notzr, out=w3);
         And (a=instruction[1], b=zr, out=w4);
         Or (a=w3, b=w4, out=w5);
         And (a=instruction[15], b=w5, out=loadPC);
