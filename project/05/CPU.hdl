@@ -54,7 +54,7 @@ CHIP CPU {
         
         // Mux1
         Or (a=notins15, b=instruction[12], out=selMux1);
-        Mux16 (a=outa, b=inM, sel=selMux1, out=outMux1);
+        Mux16 (a=outA, b=inM, sel=selMux1, out=outMux1);
         
         // D Register
         And (a=instruction[4], b=instruction[15], out=loadD);
