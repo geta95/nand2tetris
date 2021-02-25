@@ -44,8 +44,7 @@ CHIP CPU {
         And (a=instruction[15], b=instruction[3], out=writeM);
         
         // Mux0
-        And (a=instruction[15], b=instruction[5], out=loadMux0);
-        Mux16 (a=instruction, b=outALU, sel=loadMux0, out=outMux0);
+        Mux16 (a=instruction, b=outALU, sel=instruction[15], out=outMux0);
         
         // A Register
         Not (in=instruction[15], out=notins15);
