@@ -77,7 +77,7 @@ CHIP CPU {
              );
              
         // PC
-        PC (in=outA, inc=true, load=loadPC, reset=reset, out[0..14]=pc);
+        PC (in=outA, load=loadPC, inc=true, reset=reset, out[0..14]=pc);
              
         // Judging JMP
         And (a=instruction[2], b=ng, out=w0);
