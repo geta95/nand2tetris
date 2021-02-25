@@ -81,9 +81,11 @@ CHIP CPU {
         // Judging JMP
         And (a=instruction[2], b=ng, out=w0);
         Not (in=ng, out=notng);
+        Not (in=zr, out=notzr);
         And (a=instruction[0], b=notng, out=w1);
         Or (a=w0, b=w1, out=w2);
-        And (a=instruction[1], b=zr, out=w3);
-        Or (a=w2, b=w3, out=w4);
-        And (a=instruction[15], b=w4, out=loadPC);
+        And (a=w2, b=notzr, out=w3)
+        And (a=instruction[1], b=zr, out=w4);
+        Or (a=w3, b=w4, out=w5);
+        And (a=instruction[15], b=w5, out=loadPC);
 }
