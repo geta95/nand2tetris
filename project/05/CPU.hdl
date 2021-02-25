@@ -40,4 +40,31 @@ CHIP CPU {
 
     PARTS:
     // Put your code here:
+        Not (in=instruciton[15], out=notins15);
+        Or (a=instruction[5], b=notins15, out=loada);
+        Or (a=notins15, b=instruction[12], out=selmux1)
+        And (a=instruction[4], instruction[15], out=loadd)
+        
+        Mux16 (a=instruction, b=outalu, sel=instruction[15], out=outmux0);
+        ARegister (in=outmux0, load=loada, out=outa);
+        Mux16 (a=outa, b=inM, sel=selmux1, out=outmux1);
+        
+        DRegister (in=outalu, load=loadd, out=outd);
+        
+        ALU (
+             x=outd,
+             y=outmux1,
+             zx=instruction[11],
+             nx=instruction[10],
+             zy=instruction[9],
+             ny=instruction[8],
+             f=instruction[7],
+             no=instruction[6],
+             out=outM,
+             out=outalu,
+             zr=zr,
+             ng=ng
+             );
+             
+        
 }
