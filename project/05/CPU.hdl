@@ -40,13 +40,14 @@ CHIP CPU {
 
     PARTS:
     // Put your code here:
+        And (a=instruction[15], b=instruction[3], out=writeM);
         Not (in=instruction[15], out=notins15);
         Or (a=instruction[5], b=notins15, out=loada);
         Or (a=notins15, b=instruction[12], out=selmux1);
         And (a=instruction[4], b=instruction[15], out=loadd);
         
         Mux16 (a=instruction, b=outalu, sel=instruction[15], out=outmux0);
-        ARegister (in=outmux0, load=loada, out=outa);
+        ARegister (in=outmux0, load=loada, out=outa, out[0..14]=addressM);
         Mux16 (a=outa, b=inM, sel=selmux1, out=outmux1);
         
         DRegister (in=outalu, load=loadd, out=outd);
@@ -75,5 +76,5 @@ CHIP CPU {
         Or (a=w2, b=w3, out=w4);
         And (a=instruction[15], b=w4, out=loadpc);
         
-        PC (in=outa, inc=true, load=loadpc, reset=reset, out=pc);
+        PC (in=outa, inc=true, load=loadpc, reset=reset, out[0..14]=pc);
 }
